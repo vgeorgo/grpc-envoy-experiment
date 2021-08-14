@@ -9,8 +9,7 @@ services:
       - "50051:50051"
     volumes:
       - ./session_service/src:/usr/src/app
-      - /usr/src/app/util # Ignores util
-      - /usr/src/app/protos # Ignores protos
+      - /usr/src/app/common/ # Ignores common files
       - /usr/src/app/node_modules/ # Ignores node_modules
 
   envoy:

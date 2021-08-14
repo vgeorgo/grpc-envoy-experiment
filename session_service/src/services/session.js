@@ -1,7 +1,7 @@
 const path = require('path');
-const { loadPackageDefinition } = require('../util/grpc');
+const { loadPackageDefinition } = require('../common/util/grpc');
 
-const packageDefinition = loadPackageDefinition(path.join(__dirname, '..', 'protos', 'session.proto'), 'session');
+const packageDefinition = loadPackageDefinition(path.join(__dirname, '..', 'common', 'protos', 'session.proto'), 'session');
 
 const getSession = (call, callback) => { };
 
