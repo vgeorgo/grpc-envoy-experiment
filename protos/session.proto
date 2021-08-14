@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package session;
+
+service SessionService {
+  rpc GetSession (GetSessionRequest) returns (SessionResponse) {};
+  rpc CreateSession (CreateSessionRequest) returns (SessionResponse) {};
+  rpc DeleteSession (DeleteSessionRequest) returns (SessionResponse) {};
+}
+
+message GetSessionRequest {}
+
+message CreateSessionRequest {
+  string user = 1;
+  string password = 2;
+}
+
+message DeleteSessionRequest {}
+
+message SessionResponse {}
