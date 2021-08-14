@@ -3,14 +3,14 @@ version: '3'
 services:
   session-server:
     build: 
-      context: ./session-service
+      context: ./session_service
       dockerfile: ./Dockerfile
     ports:
       - "50051:50051"
     volumes:
-      - ./session-service/src:/usr/src/app
       - ./util:/usr/src/app/util
       - ./protos:/usr/src/app/protos
+      - /usr/src/app/node_modules/ # Ignores node_modules
 
   envoy:
     image: envoyproxy/envoy-dev:7e6986f75b952aae4d9048b16ca90e6494ca3bf7
