@@ -6,6 +6,8 @@ services:
       context: ./
       dockerfile: ./evans_cli/Dockerfile
     tty: true
+    env_file: .env
+    profiles: ["debug"]
 
   session_server:
     build: 
@@ -17,11 +19,15 @@ services:
       - ./session_service/src:/usr/src/app
       - /usr/src/app/common # Ignores common files
       - /usr/src/app/node_modules # Ignores node_modules
+    env_file: .env
+    profiles: ["debug", "dev"]
 
   envoy:
-    image: envoyproxy/envoy-dev:7e6986f75b952aae4d9048b16ca90e6494ca3bf7
+    build: 
+      context: ./
+      dockerfile: ./envoy/Dockerfile
     ports:
       - "9901:9901"
       - "10000:10000"
-    volumes:
-      - ./envoy:/etc/envoy
+    env_file: .env
+    profiles: ["debug", "dev"]

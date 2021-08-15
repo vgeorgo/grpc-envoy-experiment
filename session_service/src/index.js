@@ -4,7 +4,7 @@ const grpc = require('grpc');
 const session = require('./services/session');
 
 const server = new grpc.Server();
-const serverAddr = '127.0.0.1:50051';
+const serverAddr = `0.0.0.0:${process.env.SESSION_SERVICE_PORT}`;
 
 // Add server services
 server.addService(session.service, session.rpcFunctions);
