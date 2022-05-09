@@ -1,16 +1,31 @@
 const path = require('path');
 const { loadPackageDefinition } = require('../common/util/grpc');
 
-const packageDefinition = loadPackageDefinition(path.join(__dirname, '..', 'common', 'protos', 'session.proto'), 'session');
+const packageDefinition = loadPackageDefinition(
+  path.join(__dirname, '..', 'common', 'protos', 'session.proto'),
+  'session',
+);
 
-const getSession = (call, callback) => { };
+const check = (call, callback) => {
+  callback(null, {
+    id: `user_session_token`,
+  });
+};
 
-const createSession = (call, callback) => { };
+const create = (call, callback) => {
+  callback(null, {
+    id: `user_session_token`,
+  });
+};
 
-const deleteSession = (call, callback) => { };
+const remove = (call, callback) => {
+  callback(null, {
+    id: `user_session_token`,
+  });
+};
 
 module.exports = {
   packageDefinition,
-  service: packageDefinition.SessionService.service,
-  rpcFunctions: { getSession, createSession, deleteSession },
+  service: packageDefinition.Session.service,
+  rpcFunctions: { check, create, remove },
 };

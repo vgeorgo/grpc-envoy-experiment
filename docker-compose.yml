@@ -5,6 +5,9 @@ services:
     build: 
       context: ./
       dockerfile: ./evans_cli/Dockerfile
+    volumes:
+      - ./evans_cli/src:/usr/src/app
+      - ./common:/usr/src/common
     tty: true
     env_file: .env
     profiles: ["debug"]
@@ -17,7 +20,7 @@ services:
       - "50051:50051"
     volumes:
       - ./session_service/src:/usr/src/app
-      - /usr/src/app/common # Ignores common files
+      - ./common:/usr/src/app/common
       - /usr/src/app/node_modules # Ignores node_modules
     env_file: .env
     profiles: ["debug", "dev"]

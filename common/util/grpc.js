@@ -11,14 +11,14 @@ const _config = {
 
 /**
  * Loads gRPC package definition
- * @param {string} path 
- * @param {string} package 
- * @param {Object} config 
+ * @param {string} path
+ * @param {string} package
+ * @param {Object} config
  */
 const loadPackageDefinition = (path, package, config = _config) => {
   const protoDefinition = protoLoader.loadSync(path, config);
   return grpc.loadPackageDefinition(protoDefinition)[package];
-}
+};
 
 module.exports = {
   loadPackageDefinition,
