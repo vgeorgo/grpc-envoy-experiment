@@ -1,8 +1,10 @@
 syntax = "proto3";
 
-package session;
+package session.v1;
 
-service Session {
+option go_package = "github.com/vgeorgo/grpc-envoy-experiment/session_service_go/pkg/pb/session/v1";
+
+service JWTService {
   rpc Check (CheckRequest) returns (Response) {};
   rpc Create (CreateRequest) returns (Response) {};
   rpc Remove (RemoveRequest) returns (Response) {};
@@ -12,7 +14,6 @@ message CheckRequest {}
 
 message CreateRequest {
   string user = 1;
-  string password = 2;
 }
 
 message RemoveRequest {}

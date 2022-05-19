@@ -1,11 +1,20 @@
-FROM node:14-alpine
+FROM golang:1.18.2-alpine as base
 
-WORKDIR /usr/src/app
+RUN apk update \
+    && apk add --no-cache ca-certificates tzdata \
+    && update-ca-certificates
 
-COPY ./session_service/src .
+WORKDIR /build
 
-RUN npm i -g grpc-tools --unsafe-perm
-RUN npm i
+COPY . .
 
-EXPOSE 50051
-CMD npm run server
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+    go build -a -installsuffix cgo -o app cmd/main.go
+
+FROM scratch
+
+COPY --from=base /etc/ssl/certs /etc/ssl/certs
+COPY --from=base /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=base /build/app /bin/
+
+ENTRYPOINT [ "/bin/app" ]

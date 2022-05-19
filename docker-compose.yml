@@ -1,36 +1,18 @@
 version: '3'
 
 services:
-  evans_cli:
-    build: 
-      context: ./
-      dockerfile: ./evans_cli/Dockerfile
-    volumes:
-      - ./evans_cli/src:/usr/src/app
-      - ./common:/usr/src/common
-    tty: true
-    env_file: .env
-    profiles: ["debug"]
-
-  session_server:
-    build: 
-      context: ./
-      dockerfile: ./session_service/Dockerfile
-    ports:
-      - "50051:50051"
-    volumes:
-      - ./session_service/src:/usr/src/app
-      - ./common:/usr/src/app/common
-      - /usr/src/app/node_modules # Ignores node_modules
-    env_file: .env
-    profiles: ["debug", "dev"]
-
   envoy:
-    build: 
-      context: ./
-      dockerfile: ./envoy/Dockerfile
+    build: ./envoy
     ports:
       - "9901:9901"
       - "10000:10000"
     env_file: .env
+    profiles: ["debug", "dev"]
+
+  session_server:
+    build: ./session_service
+    ports:
+      - "50051:50051"
+    env_file: .env
+    depends_on: ["envoy"]
     profiles: ["debug", "dev"]
